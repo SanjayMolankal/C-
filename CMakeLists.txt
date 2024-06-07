@@ -7,7 +7,7 @@ project(MyProject)
 add_subdirectory(src)
 
 #Add an executable
-add_executable(MyExecutable ${SRC_FILES})
+#add_executable(MyExecutable ${SRC_FILES})
 
 # Add tests - New tests
 enable_testing()

@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.10)
 # Set the project name
 project(MyProject)
 
-# Add an executable
-add_executable(Hello.cpp)
+#Add an executable
+add_executable(MyExecutable Hello.cpp)
 
 # Add tests - New tests
 enable_testing()

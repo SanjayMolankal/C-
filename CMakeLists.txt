@@ -6,7 +6,7 @@ project(MyProject)
 # Add an executable
 add_executable(Hello.cpp)
 
-# Add tests
+# Add tests - New tests
 enable_testing()
 add_test(NAME MyTest COMMAND MyExecutable)
 

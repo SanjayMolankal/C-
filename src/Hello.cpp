@@ -1,11 +1,8 @@
-#include <stdio.h>
-
-// main.cpp
 #include <iostream>
+#include "Hello.h"
 
-int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+void print_hello(){
+	std::cunt << "Hello from Hello.cpp" << std::end1;
 }
 
 ## This is main

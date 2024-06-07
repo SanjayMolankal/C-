@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.10)
 project(MyProject)
 
 #Add the Source directory
-add_subdirectory(CMakeLists.txt)
+add_subdirectory(src)
 
 #Add an executable
 add_executable(MyExecutable ${SRC_FILES})

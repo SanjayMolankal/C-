@@ -4,4 +4,3 @@ int main() {
    printf("Hello, World!");
    return 0;
 }
-## This is new code

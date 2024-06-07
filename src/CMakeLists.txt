@@ -1,15 +1,18 @@
-cmake_minimum_required(VERSION 3.10)
+# List all source files in the src directory
+set(SRC_FILES
+    Hello.cpp
+)
 
-# Set the project name
-project(MyProject)
+# Set the source files to the parent scope so it can be accessed by the parent CMakeLists.txt
+set(SRC_FILES ${SRC_FILES} PARENT_SCOPE)
 
-#Add the Source directory
-add_subdirectory(src)
+# Add an executable with the source files from the src directory
+add_executable(MyExecutable ${SRC_FILES})
 
-#Add an executable
-add_executable(MyExecutable main.cpp Hello.cpp)
+# Optionally, if you have header files, you can add them too:
+# set(HEADER_FILES
+#     hello.h
+# )
 
-# Add tests - New tests
-enable_testing()
-add_test(NAME MyTest COMMAND MyExecutable)
-
+# Optionally, if you have subdirectories within src, you can add them using add_subdirectory()
+# add_subdirectory(subdir)

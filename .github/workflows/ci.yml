@@ -24,8 +24,8 @@ jobs:
           apt-get update
           apt-get install -y cmake gcc g++ make
 
-      - name: Create build directory
-        run: mkdir build
+      #- name: Create build directory
+       # run: mkdir build
 
       - name: Configure CMake
         run: cmake -S . -B build

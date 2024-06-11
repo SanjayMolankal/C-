@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    /#pull_request:
+    #pull_request:
     branches:
       - main
       - 'feature/*'
@@ -36,13 +36,37 @@ jobs:
       - name: Run tests
         run: cd build && ctest --output-on-failure
 
+      - name: Build project
+        run: cmake --build build --config Debug
+
+      - name: Run tests
+        run: cd build && ctest --output-on-failure
+
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: test-results
           path: build/Testing/Temporary
 
-      - name: Notify test result
-        if: failure()
-        run: echo "Unit tests failed. Please check the test results."
+      - name: Publish test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: Test Results
+          path: build/Testing/Temporary
+          retention-days: 5
+
+      - name: Report test results
+        if: always()
+        run: |
+          mkdir -p test-results
+          cp build/Testing/Temporary/LastTest.log test-results/
+        continue-on-error: true
+
+      - name: Post test results
+        if: always()
+        uses: mikepenz/action-junit-report@v3
+        with:
+          report_paths: '**/test-results/LastTest.log'
+          require_tests: true

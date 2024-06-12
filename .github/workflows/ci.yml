@@ -1,7 +1,8 @@
 name: Unit Tests
 
 on:
-  pull_request:
+  #pull_request:
+  push:
     branches:
       - main
       - '**/feature/**'  # Adjust as necessary for your branch naming conventions

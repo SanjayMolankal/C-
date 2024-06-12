@@ -9,7 +9,7 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: VideoEdge
+    runs-on: ubuntu
 
     steps:
       - name: Checkout repository

@@ -1,27 +1,25 @@
-name: CI
+name: Unit Tests
 
 on:
-  pull_request:
+  #pull_request:
+  push:
     branches:
       - main
-      - 'feature/*'
-      - 'bugfix/*'
+      - '**/feature/**'  # Adjust as necessary for your branch naming conventions
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
-    container:
-      image: ubuntu:20.04
-
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up CMake
+        uses: ./.github/actions/setup-cmake
 
       - name: Set up dependencies
-        run: |
-          apt-get update
-          apt-get install -y cmake gcc g++ make
+        run: apt-get install -y build-essential cmake
 
       - name: Create build directory
         run: mkdir build
@@ -29,19 +27,37 @@ jobs:
       - name: Configure CMake
         run: cmake -S . -B build
 
-      - name: Build
-        run: cmake --build build
+      - name: Build project
+        run: cmake --build build --config Debug
 
       - name: Run tests
         run: cd build && ctest --output-on-failure
 
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: test-results
           path: build/Testing/Temporary
 
-      - name: Notify test result
-        if: failure()
-        run: echo "Unit tests failed. Please check the test results."
+      - name: Publish test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: Test Results
+          path: build/Testing/Temporary
+          retention-days: 5
+
+      - name: Report test results
+        if: always()
+        run: |
+          mkdir -p test-results
+          cp build/Testing/Temporary/LastTest.log test-results/
+        continue-on-error: true
+
+      - name: Post test results
+        if: always()
+        uses: mikepenz/action-junit-report@v3
+        with:
+          report_paths: '**/test-results/LastTest.log'
+          require_tests: true
